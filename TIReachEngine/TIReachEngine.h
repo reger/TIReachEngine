@@ -58,5 +58,6 @@ extern NSString * const TIReachEngineStatsTypeByPlaylist;
 - (TIReachEngineConnection *)getRecentScreenshotsForPlayer:(NSString *)gamertag;
 - (TIReachEngineConnection *)getRenderedVideosForPlayer:(NSString *)gamertag page:(NSInteger)page;
 - (TIReachEngineConnection *)getResultsForSearch:(TIReachEngineSearch *)search;
+- (TIReachEngineConnection *)getChallenges;
 
 @end

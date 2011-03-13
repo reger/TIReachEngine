@@ -20,6 +20,7 @@ typedef enum {
 	TIReachEngineConnectionTypePlayerScreenshots,
 	TIReachEngineConnectionTypePlayerRenderedVideos,
 	TIReachEngineConnectionTypeFileSearch,
+	TIReachEngineConnectionTypeChallenges,
 } TIReachEngineConnectionType;
 
 @interface TIReachEngineConnection : NSURLConnection {

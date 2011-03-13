@@ -49,6 +49,7 @@ NSString * const TIReachEngineStatsTypeByPlaylist = @"byplaylist";
 - (void)_notifyDelegateOfScreenshots:(NSDictionary *)screenshots forConnection:(TIReachEngineConnection *)connection;
 - (void)_notifyDelegateOfRenderedVideos:(NSDictionary *)videos forConnection:(TIReachEngineConnection *)connection;
 - (void)_notifyDelegateOfSearchResults:(NSDictionary *)results forConnection:(TIReachEngineConnection *)connection;
+- (void)_notifyDelegateOfChallenges:(NSDictionary *)challenges forConnection:(TIReachEngineConnection *)connection;
 @end
 
 
@@ -387,6 +388,18 @@ NSString * const TIReachEngineStatsTypeByPlaylist = @"byplaylist";
 	return nil;
 }
 
+- (TIReachEngineConnection *)getChallenges {
+	
+	NSString * URLFormat = [[NSString alloc] initWithFormat:@"%@game/challenges/%@", APIRoot, APIKey];
+	NSURL * URL = [[NSURL alloc] initWithString:URLFormat];
+	[URLFormat release];
+	
+	NSURLRequest * request = [self _requestWithURL:URL];
+	[URL release];
+	
+	return [self _connectionWithRequest:request type:TIReachEngineConnectionTypeChallenges];
+}
+
 #pragma mark Connection Delegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -481,6 +494,10 @@ NSString * const TIReachEngineStatsTypeByPlaylist = @"byplaylist";
 	
 	if (correctCon.connectionType == TIReachEngineConnectionTypeFileSearch){
 		[self _notifyDelegateOfSearchResults:results forConnection:correctCon];
+	}
+	
+	if (correctCon.connectionType == TIReachEngineConnectionTypeChallenges){
+		[self _notifyDelegateOfChallenges:results forConnection:correctCon];
 	}
 }
 
@@ -623,6 +640,13 @@ NSString * const TIReachEngineStatsTypeByPlaylist = @"byplaylist";
 	  didReceiveSearchResults:results 
 					forSearch:[connection.userInfo objectForKey:TIReachEngineConnectionSearchQueryKey] 
 				   connection:connection];
+	}
+}
+
+- (void)_notifyDelegateOfChallenges:(NSDictionary *)challenges forConnection:(TIReachEngineConnection *)connection {
+	
+	if ([delegate respondsToSelector:@selector(reachEngine:didReceiveChallenges:forConnection:)]){
+		[delegate reachEngine:self didReceiveChallenges:challenges forConnection:connection];
 	}
 }
 

@@ -114,4 +114,11 @@ didReceiveSearchResults:(NSDictionary *)results
 		  forSearch:(TIReachEngineSearch *)search 
 		 connection:(TIReachEngineConnection *)connection;
 
+//========================================================================
+// Called when a request for challenges comes back successfully.
+//========================================================================
+- (void)reachEngine:(TIReachEngine *)reachEngine 
+ didReceiveChallenges:(NSDictionary *)challenges 
+	  forConnection:(TIReachEngineConnection *)connection;
+
 @end
